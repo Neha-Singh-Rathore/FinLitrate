@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinLiterate - Learn Money Simple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* PLAYFUL THEME STYLING */
+        .theme-playful .app-card {
+            border: 3px solid #0F172A;
+            box-shadow: 4px 4px 0px #0F172A;
+            border-radius: 1.25rem;
+            transition: all 0.15s ease;
+        }
+        .theme-playful .app-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #0F172A;
+        }
+        .theme-playful .app-btn {
+            border: 2.5px solid #0F172A;
+            box-shadow: 3px 3px 0px #0F172A;
+            font-family: 'Fredoka', cursive;
+        }
+        .theme-playful .app-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #0F172A;
+        }
+        .theme-playful .heading-font {
+            font-family: 'Fredoka', cursive;
+        }
+
+        /* MINIMALIST THEME STYLING */
+        .theme-minimal .app-card {
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 1rem;
+            transition: all 0.2s ease;
+        }
+        .theme-minimal .app-card:hover {
+            border-color: #CBD5E1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+        .theme-minimal .app-btn {
+            border: none;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+        }
+        .theme-minimal .heading-font {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.025em;
+        }
+    </style>
+</head>
+<body id="appBody" class="theme-playful bg-amber-50/40 text-slate-900 min-h-screen flex flex-col pb-12">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b-2 border-slate-900 sticky top-0 z-40 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 cursor-pointer">
+                <div id="brandLogo" class="w-10 h-10 bg-yellow-400 text-slate-900 border-2 border-slate-900 rounded-xl flex items-center justify-center font-black text-xl shadow-sm rotate-[-3deg]">
+                    💸
+                </div>
+                <div>
+                    <span class="heading-font text-2xl font-black text-slate-900 tracking-tight">Fin<span class="text-indigo-600">Literate</span></span>
+                    <span class="block text-[10px] font-bold uppercase tracking-widest text-slate-400">Zero-Jargon Finance</span>
+                </div>
+            </div>
+
+            <!-- Vibe Switcher & Streak Tracker -->
+            <div class="flex items-center space-x-3">
+                <!-- Theme Switcher Button -->
+                <div class="relative">
+                    <button onclick="toggleThemeDropdown()" class="app-btn bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-3 py-2 rounded-xl flex items-center space-x-2 border border-slate-300">
+                        <span id="activeThemeIcon">🎉</span>
+                        <span id="activeThemeLabel" class="hidden sm:inline">Playful Vibe</span>
+                        <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                    </button>
+
+                    <div id="themeDropdown" class="absolute right-0 mt-2 w-48 bg-white border-2 border-slate-900 rounded-2xl shadow-xl p-2 hidden z-50">
+                        <div class="text-[10px] font-bold text-slate-400 uppercase px-3 py-1">Select Vibe Preference</div>
+                        <button onclick="setTheme('playful')" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-700 hover:bg-amber-100 rounded-xl flex items-center space-x-2">
+                            <span>🎉 Playful & Bouncy</span>
+                        </button>
+                        <button onclick="setTheme('minimal')" class="w-full text-left px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 rounded-xl flex items-center space-x-2">
+                            <span>✨ Minimal & Sleek</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Daily Streak Counter -->
+                <div class="flex items-center space-x-1.5 bg-amber-100 border-2 border-slate-900 px-3 py-1.5 rounded-full text-amber-900 text-xs font-bold">
+                    <span class="text-sm">🔥</span>
+                    <span>12 Day Streak!</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="max-w-6xl mx-auto px-4 mt-6 flex-1 w-full space-y-8">
+
+        <!-- STREAK WEBINAR BANNER -->
+        <div class="bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 text-white rounded-3xl p-6 md:p-8 app-card relative overflow-hidden border-3 border-slate-900 shadow-lg">
+            <div class="relative z-10 max-w-2xl space-y-4">
+                <div class="inline-flex items-center space-x-2 bg-yellow-300 text-slate-900 text-xs font-extrabold px-3 py-1 rounded-full border border-slate-900 uppercase">
+                    <span>⚡ Streak Milestone Pass</span>
+                </div>
+
+                <h1 class="heading-font text-2xl md:text-3xl font-extrabold leading-snug">
+                    You're 2 Days Away From Unlocking The Live CA Session! 🎟️
+                </h1>
+                
+                <p class="text-violet-100 text-sm leading-relaxed font-medium">
+                    Hit a <strong>14-day streak</strong> to join our live interactive workshop: <br>
+                    <span class="text-yellow-300 font-bold">"How to File Your First ITR & Get Extra Refunds Back"</span> with Chartered Accountant Ananya Sharma.
+                </p>
+
+                <!-- Streak Progress -->
+                <div class="space-y-1.5 pt-1">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-violet-200">Progress: 12 / 14 Days</span>
+                        <span class="text-yellow-300">85% Complete</span>
+                    </div>
+                    <div class="w-full bg-slate-900/40 h-3.5 rounded-full overflow-hidden border-2 border-slate-900">
+                        <div class="bg-yellow-400 h-full w-[85%]"></div>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex flex-wrap gap-3">
+                    <button onclick="openLessonModal('80c')" class="app-btn bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-bold text-sm px-5 py-2.5 rounded-xl flex items-center space-x-2">
+                        <i class="fas fa-play text-xs"></i>
+                        <span>Start Today's 3-Min Lesson</span>
+                    </button>
+                    <button onclick="switchTab('webinars')" class="app-btn bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2.5 rounded-xl border border-white/30">
+                        View Live Pass Details 🗓️
+                    </button>
+                </div>
+            </div>
+
+            <div class="absolute right-2 -bottom-6 opacity-20 text-[130px] select-none pointer-events-none hidden md:block">
+                🎟️
+            </div>
+        </div>
+
+        <!-- Catchy Topic Grid -->
+        <div class="space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                <h2 class="heading-font text-xl md:text-2xl font-extrabold text-slate-900 flex items-center">
+                    <span class="mr-2">🔥</span> Trending Bite-Sized Lessons
+                </h2>
+                <div class="flex space-x-2 text-xs font-bold">
+                    <button onclick="filterCategory('all')" id="btn-cat-all" class="px-3 py-1.5 bg-slate-900 text-white rounded-xl border border-slate-900">All Topics</button>
+                    <button onclick="filterCategory('job')" id="btn-cat-job" class="px-3 py-1.5 bg-white text-slate-700 rounded-xl border border-slate-300 hover:border-slate-900">First Salary 💼</button>
+                    <button onclick="filterCategory('tax')" id="btn-cat-tax" class="px-3 py-1.5 bg-white text-slate-700 rounded-xl border border-slate-300 hover:border-slate-900">Taxes 🏷️</button>
+                    <button onclick="filterCategory('invest')" id="btn-cat-invest" class="px-3 py-1.5 bg-white text-slate-700 rounded-xl border border-slate-300 hover:border-slate-900">Investing 🚀</button>
+                </div>
+            </div>
+
+            <!-- Dynamic Lesson Cards with Catchy Headlines -->
+            <div id="lessonGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Card 1: Section 80C -->
+                <div onclick="openLessonModal('80c')" class="app-card bg-white p-5 rounded-2xl border cursor-pointer hover:border-indigo-600 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-indigo-200 uppercase">Taxes</span>
+                            <span class="text-xs font-bold text-slate-400">⏱️ 3 min read</span>
+                        </div>
+                        <h3 class="heading-font font-bold text-slate-900 text-lg leading-snug">
+                            "The ₹1.5 Lakh Government Discount Voucher" 🏷️
+                        </h3>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">
+                            How putting your money into savings like PPF or ELSS tells the government: <i>"Don't tax me on this cash!"</i>
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-bold text-indigo-600">
+                        <span>Read Catchy Story</span>
+                        <span>👉</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: CTC vs In-Hand -->
+                <div onclick="openLessonModal('ctc')" class="app-card bg-white p-5 rounded-2xl border cursor-pointer hover:border-indigo-600 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-amber-100 text-amber-800 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-amber-200 uppercase">First Salary</span>
+                            <span class="text-xs font-bold text-slate-400">🎬 60s Reel</span>
+                        </div>
+                        <h3 class="heading-font font-bold text-slate-900 text-lg leading-snug">
+                            "Why is my ₹10 Lakh salary actually only 60k in my bank?!" 🍕
+                        </h3>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">
+                            How office snacks, insurance, and PF slice your offer letter before it lands in your account.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-bold text-amber-700">
+                        <span>Watch Reel</span>
+                        <span>▶️</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: EPF Piggy Bank -->
+                <div onclick="openLessonModal('epf')" class="app-card bg-white p-5 rounded-2xl border cursor-pointer hover:border-indigo-600 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-purple-100 text-purple-800 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-purple-200 uppercase">First Salary</span>
+                            <span class="text-xs font-bold text-slate-400">⏱️ 2 min read</span>
+                        </div>
+                        <h3 class="heading-font font-bold text-slate-900 text-lg leading-snug">
+                            "The Boss's Piggy Bank: Where they match your money rupee-for-rupee!" 🐷
+                        </h3>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">
+                            EPF demystified: Why taking a small salary cut today gives you free doubled cash for retirement.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-bold text-purple-700">
+                        <span>Read Catchy Story</span>
+                        <span>👉</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Compounding Interest -->
+                <div onclick="openLessonModal('compound')" class="app-card bg-white p-5 rounded-2xl border cursor-pointer hover:border-indigo-600 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-emerald-200 uppercase">Investing</span>
+                            <span class="text-xs font-bold text-slate-400">🎮 Interactive</span>
+                        </div>
+                        <h3 class="heading-font font-bold text-slate-900 text-lg leading-snug">
+                            "Money Making Babies: How ₹1,000 becomes a financial snowball" 🚀
+                        </h3>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">
+                            The magic of compounding interest: Why starting at age 21 vs 28 makes a ₹50 Lakh difference!
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-bold text-emerald-700">
+                        <span>Play Simulator</span>
+                        <span>🎮</span>
+                    </div>
+                </div>
+
+                <!-- Card 5: Credit Cards -->
+                <div onclick="openLessonModal('credit')" class="app-card bg-white p-5 rounded-2xl border cursor-pointer hover:border-indigo-600 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-rose-100 text-rose-800 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-rose-200 uppercase">Credit Score</span>
+                            <span class="text-xs font-bold text-slate-400">🎬 60s Reel</span>
+                        </div>
+                        <h3 class="heading-font font-bold text-slate-900 text-lg leading-snug">
+                            "Free Flight Points vs 42% Trap: How to beat the Credit Card Game" 💳
+                        </h3>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">
+                            How to use credit cards strictly like debit cards to earn free rewards while building a 750+ CIBIL score.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-bold text-rose-700">
+                        <span>Watch Reel</span>
+                        <span>▶️</span>
+                    </div>
+                </div>
+
+                <!-- Card 6: Form 16 -->
+                <div onclick="openLessonModal('form16')" class="app-card bg-white p-5 rounded-2xl border cursor-pointer hover:border-indigo-600 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-sky-100 text-sky-800 text-[10px] font-black px-2.5 py-0.5 rounded-full border border-sky-200 uppercase">Taxes</span>
+                            <span class="text-xs font-bold text-slate-400">⏱️ 2 min read</span>
+                        </div>
+                        <h3 class="heading-font font-bold text-slate-900 text-lg leading-snug">
+                            "The Annual Report Card your boss hands you every June" 📑
+                        </h3>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed">
+                            Form 16 decoded: What it is, why every employer gives it, and how to use it to file your taxes in 10 mins.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-bold text-sky-700">
+                        <span>Read Story</span>
+                        <span>👉</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- LESSON POPUP MODAL -->
+    <div id="lessonModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-lg app-card p-6 space-y-4 relative border border-slate-200">
+            <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-lg">&times;</button>
+            
+            <div id="modalBadge" class="inline-block bg-indigo-100 text-indigo-800 text-xs font-black px-3 py-1 rounded-full border border-indigo-200 uppercase">
+                Topic Breakdown
+            </div>
+
+            <h3 id="modalTitle" class="heading-font text-xl font-extrabold text-slate-900">
+                The ₹1.5 Lakh Government Discount Voucher 🏷️
+            </h3>
+
+            <div id="modalContent" class="space-y-3 text-sm text-slate-600 leading-relaxed max-h-64 overflow-y-auto pr-1">
+                <!-- Swapped via JavaScript below -->
+            </div>
+
+            <div class="pt-3 flex justify-between items-center border-t border-slate-100">
+                <span class="text-xs font-bold text-emerald-600">+1 Streak Day Earned! 🔥</span>
+                <button onclick="completeLesson()" class="app-btn bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs">
+                    Mark Done & Keep Streak
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Switcher State
+        function setTheme(mode) {
+            const body = document.getElementById('appBody');
+            const logo = document.getElementById('brandLogo');
+            const themeLabel = document.getElementById('activeThemeLabel');
+            const themeIcon = document.getElementById('activeThemeIcon');
+
+            if (mode === 'playful') {
+                body.className = 'theme-playful bg-amber-50/40 text-slate-900 min-h-screen flex flex-col pb-12';
+                logo.className = 'w-10 h-10 bg-yellow-400 text-slate-900 border-2 border-slate-900 rounded-xl flex items-center justify-center font-black text-xl shadow-sm rotate-[-3deg]';
+                themeLabel.innerText = 'Playful Vibe';
+                themeIcon.innerText = '🎉';
+            } else {
+                body.className = 'theme-minimal bg-slate-50 text-slate-900 min-h-screen flex flex-col pb-12';
+                logo.className = 'w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-black text-xl shadow-md';
+                themeLabel.innerText = 'Minimal Vibe';
+                themeIcon.innerText = '✨';
+            }
+
+            toggleThemeDropdown();
+        }
+
+        function toggleThemeDropdown() {
+            document.getElementById('themeDropdown').classList.toggle('hidden');
+        }
+
+        // Lesson Data Dictionary with Catchy Layman Content
+        const lessons = {
+            '80c': {
+                title: 'The ₹1.5 Lakh Government Discount Voucher 🏷️',
+                badge: 'Taxes',
+                content: `
+                    <p>Imagine the tax department hands you a <strong>₹1.5 Lakh discount coupon</strong> every financial year!</p>
+                    <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-200 text-indigo-900 text-xs space-y-1">
+                        <strong>💡 How to redeem this voucher:</strong>
+                        <p class="text-slate-600">Invest your money into safe avenues like <strong>PPF</strong>, <strong>ELSS Mutual Funds</strong>, or your employer's <strong>EPF</strong>. The government says: <i>"Since you saved this money responsibly, we won't charge income tax on up to ₹1,50,000 of your salary!"</i></p>
+                    </div>
+                    <p class="text-xs">Result: You legally lower your tax bill while growing your own savings!</p>
+                `
+            },
+            'ctc': {
+                title: 'Why is my ₹10 Lakh salary actually only 60k in my bank?! 🍕',
+                badge: 'First Salary',
+                content: `
+                    <p>When an employer shouts <strong>10 Lakh CTC (Cost to Company)</strong>, that includes everything the company spends on you—including your office laptop, coffee, health insurance, and provident fund match!</p>
+                    <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-900 text-xs space-y-1">
+                        <strong>🍕 The Paycheck Pizza Rule:</strong>
+                        <p class="text-slate-600">Your CTC is the whole 8-slice pizza. But before it hits your bank account, 2 slices go to PF piggy bank, 1 slice goes to government income tax, and 1 slice goes to insurance. You get the remaining 4 slices as <strong>In-Hand Cash</strong>!</p>
+                    </div>
+                `
+            },
+            'epf': {
+                title: 'The Boss\'s Piggy Bank: Matched Rupee-for-Rupee! 🐷',
+                badge: 'First Salary',
+                content: `
+                    <p><strong>EPF (Employee Provident Fund)</strong> is a government-mandated piggy bank for your future self.</p>
+                    <div class="bg-purple-50 p-3 rounded-xl border border-purple-200 text-purple-900 text-xs space-y-1">
+                        <strong>🎁 The Ultimate Perk:</strong>
+                        <p class="text-slate-600">If ₹1,800 gets deducted from your monthly salary for PF, your company is legally required to add ANOTHER ₹1,800 out of their own pocket into your PF account! That's instant 100% free money!</p>
+                    </div>
+                `
+            },
+            'compound': {
+                title: 'Money Making Babies: How ₹1,000 becomes a snowball 🚀',
+                badge: 'Investing',
+                content: `
+                    <p>Simple interest pays you on your original money. <strong>Compound interest</strong> pays you interest ON your interest!</p>
+                    <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 text-emerald-900 text-xs space-y-1">
+                        <strong>📈 The Snowball Effect:</strong>
+                        <p class="text-slate-600">Year 1: ₹10,000 earns ₹1,000. <br>Year 2: You earn interest on ₹11,000 (₹1,100). <br>Year 10: Your interest earns more money than your original job savings!</p>
+                    </div>
+                `
+            },
+            'credit': {
+                title: 'Free Flight Points vs 42% Interest Trap 💳',
+                badge: 'Credit Score',
+                content: `
+                    <p>Credit cards are amazing financial tools IF you follow one golden rule: <strong>Treat it like a debit card!</strong></p>
+                    <div class="bg-rose-50 p-3 rounded-xl border border-rose-200 text-rose-900 text-xs space-y-1">
+                        <strong>⚠️ The Golden Rule:</strong>
+                        <p class="text-slate-600">Always pay 100% of the bill on time. Never pay just the "minimum due"—or banks will charge you 42% annual interest on your remaining balance!</p>
+                    </div>
+                `
+            },
+            'form16': {
+                title: 'The Annual Report Card your boss hands you in June 📑',
+                badge: 'Taxes',
+                content: `
+                    <p><strong>Form 16</strong> is an official certificate issued by your employer at the end of every financial year.</p>
+                    <div class="bg-sky-50 p-3 rounded-xl border border-sky-200 text-sky-900 text-xs space-y-1">
+                        <strong>🧾 What it contains:</strong>
+                        <p class="text-slate-600">It lists exactly how much total salary you earned and how much tax your company already deducted and paid to the government on your behalf. You need this single document to file your ITR in under 10 minutes!</p>
+                    </div>
+                `
+            }
+        };
+
+        function openLessonModal(lessonKey) {
+            const data = lessons[lessonKey] || lessons['80c'];
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalBadge').innerText = data.badge;
+            document.getElementById('modalContent').innerHTML = data.content;
+            document.getElementById('lessonModal').classList.remove('hidden');
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lessonModal').classList.add('hidden');
+        }
+
+        function completeLesson() {
+            closeLessonModal();
+            alert("🎉 +1 Day Streak Added! You are on a 13-Day Streak! Just 1 more day until your Live CA Webinar Pass!");
+        }
+
+        function switchTab(tab) {
+            alert("Webinar Pass unlocks automatically when your streak reaches 14 Days! Keep learning!");
+        }
+
+        function filterCategory(cat) {
+            // Simplified category filter feedback
+            alert("Filtering content for: " + cat.toUpperCase());
+        }
+    </script>
+</body>
+</html>
